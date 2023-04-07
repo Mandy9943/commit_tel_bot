@@ -24,6 +24,8 @@ export const sendMultiplesCommits = async (repositoryUrl: string) => {
   }
 };
 export const sendlastCommit = async (commitEvent: PushEvent) => {
+  console.log("commitEvent", commitEvent);
+
   const commitBranch = commitEvent.ref.replace("refs/heads/", "");
 
   const repo = getRepositoryByName(commitEvent.repository.html_url);

@@ -12,6 +12,8 @@ app.get("/", (req, res) => {
 app.post("/webhook", async (req, res) => {
   try {
     const repositoryUrl = req.body.repository.html_url;
+    console.log("req.body.repository", req.body.repository);
+
     await sendlastCommit(repositoryUrl);
 
     res.sendStatus(200);

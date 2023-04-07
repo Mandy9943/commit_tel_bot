@@ -5,6 +5,10 @@ const app = express();
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Hola, mundo!");
+});
+
 app.post("/webhook", async (req, res) => {
   try {
     const repositoryUrl = req.body.repository.html_url;

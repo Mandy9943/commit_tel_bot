@@ -16,7 +16,7 @@ export async function sendMessage(
 bot.onText(/\/start/, (msg, match) => {
   bot.sendMessage(
     msg.chat.id,
-    "¡Hola! Soy el bot de Github para Telegram. Estoy aquí para mantenerte informado sobre los últimos commits en un repositorio de Github. Para empezar, envíame el nombre del repositorio que deseas monitorear."
+    "Hi there! I'm the Quantumx Github bot for Telegram.\n\nI'm here to keep you informed about the latest commits in the repository.\n\nAdd me a group and I will start sending you the latest commits."
   );
 });
 
@@ -27,7 +27,7 @@ bot.onText(/\/post_group_commits/, async (msg) => {
 
   try {
     await saveChatGroup(msg.chat.id, msg.chat.title);
-    bot.sendMessage(chatId, "Chat id guardado con éxito");
+    bot.sendMessage(chatId, "Ok, I will start sending messages now.");
   } catch (error) {
     console.error(error.message);
   }
@@ -36,7 +36,6 @@ bot.onText(/\/post_group_commits/, async (msg) => {
 bot.onText(/\/stop_group_posting/, async (msg) => {
   const chatId = msg.chat.id;
   const message = await deleteChatGroup(chatId);
-  console.log("message", message);
 
   bot.sendMessage(chatId, message);
 });

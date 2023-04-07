@@ -17,11 +17,13 @@ export async function getLastCommit(
 
   // Obtener el último commit
   const lastCommit = commits[0];
+  console.log("lastCommit", lastCommit);
 
   // Crear un objeto con el mensaje y la fecha del último commit
   const commitInfo: CommitInfo = {
     message: lastCommit.commit.message,
     date: lastCommit.commit.author?.date,
+    author: lastCommit.commit.author?.name,
   };
 
   // Devolver el objeto con la información del último commit

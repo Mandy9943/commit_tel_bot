@@ -1,8 +1,8 @@
 import { sendMessage } from "./bot";
 import { config } from "./config";
 import { getAllGroups } from "./db";
-import { getLastCommit, getLatestCommits } from "./github";
-import { Repository } from "./types";
+import { getLatestCommits } from "./github";
+import { PushEvent, Repository } from "./types";
 
 export const sendMultiplesCommits = async (repositoryUrl: string) => {
   const commits = await getLatestCommits(getRepositoryByName(repositoryUrl), 5);
@@ -23,10 +23,20 @@ export const sendMultiplesCommits = async (repositoryUrl: string) => {
     //   }
   }
 };
-export const sendlastCommit = async (repositoryUrl: string) => {
-  const repository = getRepositoryByName(repositoryUrl);
-  const lastCommitInfo = await getLastCommit(repository);
-  const message = `Nuevo commit en ${repository.name}\nComment: ${lastCommitInfo.message}\nFecha: ${lastCommitInfo.date}`;
+export const sendlastCommit = async (commitEvent: PushEvent) => {
+  const commitBranch = commitEvent.ref.replace("refs/heads/", "");
+
+  const repo = getRepositoryByName(commitEvent.repository.html_url);
+  const deployedUrl = repo.deployments[commitBranch];
+  const deployedText = deployedUrl ? `\nDeployed: ${deployedUrl}` : "";
+  const message = `Nuevo commit en ${
+    commitEvent.repository.full_name
+  }\nBranch: ${commitEvent.ref.replace(
+    "refs/heads/",
+    ""
+  )}${deployedText}\nComment: ${commitEvent.head_commit.message}\nAuthor: ${
+    commitEvent.head_commit.author.username
+  }\nFecha: ${commitEvent.head_commit.timestamp}`;
   const groups = await getAllGroups();
   for (const user of config.users) {
     await sendMessage(user.id, message);

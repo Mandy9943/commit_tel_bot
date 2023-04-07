@@ -72,12 +72,13 @@ export async function deleteChatGroup(chatId: number): Promise<string> {
                 return;
               }
 
-              message = "El envío de commits ha sido detenido para este grupo.";
+              message =
+                "The sending of commits has been stopped for this group";
               resolve(message);
             }
           );
         } else {
-          message = "Este grupo no está registrado en la base de datos.";
+          message = "This group is not registered in the database.";
           resolve(message);
         }
       }

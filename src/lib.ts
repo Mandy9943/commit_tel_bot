@@ -41,11 +41,19 @@ export const sendlastCommit = async (commitEvent: PushEvent) => {
   }\nFecha: ${commitEvent.head_commit.timestamp}`;
   const groups = await getAllGroups();
   for (const user of config.users) {
-    await sendMessage(user.id, message);
+    try {
+      await sendMessage(user.id, message);
+    } catch (error) {
+      console.log(`Error sending mensaje to user ${user.id}`, error);
+    }
   }
 
   for (const group of groups) {
-    await sendMessage(group.chat_id, message);
+    try {
+      await sendMessage(group.chat_id, message);
+    } catch (error) {
+      console.log(`Error sending mensaje to group ${group.chat_id}`, error);
+    }
   }
 };
 function getRepositoryByName(repositoryUrl: string): Repository | undefined {

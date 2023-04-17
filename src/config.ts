@@ -5,14 +5,6 @@ export const config = {
   },
   repos: [
     {
-      name: "hidden-sin",
-      url: "https://github.com/Mandy9943/hidden-sin",
-      owner: "Mandy9943",
-      deployments: {
-        main: "https://hiddensin.site/",
-      },
-    },
-    {
       name: "qx",
       url: "https://github.com/Eldar-Finance/qx",
       owner: "Eldar-Finance",

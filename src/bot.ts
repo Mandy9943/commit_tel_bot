@@ -8,8 +8,9 @@ export async function sendMessage(
   chatId: number,
   message: string
 ): Promise<void> {
-  await bot.sendMessage(chatId, message);
+  const sendMessageEvent = await bot.sendMessage(chatId, message);
   console.log(`message : ${message} sent \n`);
+  console.log("sendMessageEvent", sendMessageEvent);
 }
 
 // Configurar una respuesta cuando el bot reciba el comando /start
